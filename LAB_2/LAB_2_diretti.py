@@ -81,14 +81,17 @@ def es2(n, A):
     
     return(condA, norm)
 
+####### Testing #######
+
 FIXED_STOP = 12
 
 # Testing Hilbert
 print('Caso Hilbert: ')
-KA_Hilb = np.zeros((FIXED_STOP-1, 1))
+KA_Hilb = np.zeros((FIXED_STOP-1, 1)) # Inizializzazione degli array di condizionamento e errore rel
 Err_Hilb = np.zeros((FIXED_STOP-1, 1))
 
-for n in np.arange(2, FIXED_STOP):
+for n in np.arange(2, FIXED_STOP): # Si verificano le condizioni dell'errore e del condizionamento al variare di n
+                                    # Ovvero la dimensione della matrice.
     A_Hilb = scipy.linalg.hilbert(n)
     (KA_Hilb[n - 2], Err_Hilb[n - 2]) = es2(n, A_Hilb)
     
@@ -102,7 +105,7 @@ for n in np.arange(2, FIXED_STOP):
     (KA_TriD[n - 2], Err_TriD[n - 2]) = es2(n, A_TriD)
     
 
-# Plotting
+###### PLOTTING ######
 
 # Disegna il grafico del numero di condizione in funzione della dimensione del sistema. Caso Hilbert.
 points = FIXED_STOP - 1
@@ -134,4 +137,13 @@ plt.title('TRIDIAGONALE, Errore relativo')
 plt.xlabel('Dimensione matrice: n')
 plt.ylabel('Err = ||my_x-x|| / ||x||')
 plt.show()     
+
+"""
+1. Utilizzando i grafici richiesti: spiegare l’andamento dell’errore rispetto al numero di condizione della
+matrice, l’andamento del tempo di esecuzione rispetto alla dimensione del sistema in relazione alla
+complessità computazioneale degli algoritmi utilizzati.
+
+2. Discutere la differenza di errore e tempo di esecuzione ottenuti con i metodi diretti e iterativi.
+"""
+
     

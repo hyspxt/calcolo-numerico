@@ -81,7 +81,7 @@ def GaussSeidel(A, b, x0, maxit, tol, xTrue):
   errIter = errIter[:ite]  
   return [x, ite, relErr, errIter]
 
-def itConverges(A):
+def itConverges(A): # Calculate the max eigenvalue in a matrix given in input
    return max(abs(np.linalg.eigvalsh(A))) < 1
 
 
@@ -103,6 +103,8 @@ print('\n b:\n',b)
 """ 
 2. Verificare, calcolando il raggio spettrale della matrice, la convergenza dei metodi.
 """
+# Utilizzando itConverges, viene calcolato il raggio spettrale della matrice, ovvero il max degli autovalori
+# si ha che l' algoritmo converge se e solo se tale valore è <1
 
 D = 9 * np.eye(n)
 E = np.diag(-4 * np.ones(n - 1), k = -1)
@@ -124,7 +126,7 @@ else:
     print('Gauss-Seidel NON converge in quanto il raggio spettrale é >= 1 ') 
 
 """
-3. Eseguire i calcoli con tolleranza 1.e-8
+3. Eseguire i calcoli con tolleranza 1.e-8 .
 """
 
 #metodi iterativi
@@ -144,12 +146,11 @@ print('\nSoluzione calcolata da Gauss Seidel:' )
 for i in range(n):
     print('%0.2f' %xGS[i])
 
-# CONFRONTI
+### CONFRONTI ###
 # Confronto grafico degli errori di Errore Relativo
 
 rangeJabobi = range (0, kJacobi)
 rangeGS = range(0, kGS)
-
 
 """
 4. Riportare in un grafico l'errore relativo (in norma 2) di entrambi i metodi al variare del numero
@@ -275,4 +276,12 @@ plt.xlabel('N value')
 plt.ylabel('Execution Time')
 plt.title('Different algorithms Execution time on N')
 plt.show()
+
+"""
+1. Utilizzando i grafici richiesti: spiegare l’andamento dell’errore rispetto al numero di condizione della
+matrice, l’andamento del tempo di esecuzione rispetto alla dimensione del sistema in relazione alla
+complessità computazioneale degli algoritmi utilizzati.
+
+2. Discutere la differenza di errore e tempo di esecuzione ottenuti con i metodi diretti e iterativi.
+"""
 
