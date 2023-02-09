@@ -384,5 +384,5 @@ plt.show()
 
 """
 Il numero di iterazioni dipende dai tre fattori: lambda, range di maxit e j_max nel metodo next_step.
-Trovare un giusto compromesso.
+L' obiettivo é quello di trovare un giusto compromesso.
 """

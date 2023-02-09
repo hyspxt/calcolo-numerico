@@ -151,6 +151,25 @@ plt.ylabel('MSE')
 plt.title('MSE al variare delle iterazioni, naive')
 plt.show()
 
+
+'''
+Il PSNR (peak signal noise ratio) é un valore basato sul rapporto segnale/rumore. Un valore PSNR alto 
+indica una qualitá dell' immagine alta, in quanto c'e poco rumore e le differenze tra le due immagini sono minime.
+
+L'MSE é una misura della differenza media tra i pixel di due immagini. Piú basso é, meno differenze ci sono 
+tra le due immagini.
+
+
+Per quanto riguarda la soluzione naive, come possiamo vedere dall' immagine ma soprattutto dal grafico,
+essa diventa piú chiare ma subisce dei netti peggioramenti rispetto all' immagine degradata di partenza:
+ció si evince dal fatto che il PSNR é addirittura piú basso. Questo é dovuto al fatto che la soluzione naive
+non é in alcun modo regolarizzata e quindi il problema ai minimi quadrati che risolviamo resta sempre 
+numericamente instabile. Come, vediamo dopo ció si aggira mediante i metodi di regolarizzazione.
+Anche l'MSE aumenta di una quantitá considerevelo col passare delle iterazioni.
+'''
+
+
+
 """
 Per ridurre gli effetti del rumore nella ricostruzione `e necessario introdurre un termine di 
 regolarizzazione di Tikhonov (non specifico i dati del problema ma si possono trovare in LAB5.pdf).
@@ -212,3 +231,13 @@ plt.xlabel('Iterazioni')
 plt.ylabel('MSE')
 plt.title('MSE al variare delle iterazioni, regolarizzata')
 plt.show()
+
+
+'''
+Lambda é il fattore di penalitá applicato alla soluzione: piú é alto, piú l' immagine peggiora.
+Peró un valore basso di lambda comporta anche un maggior numero di operazioni da eseguire e quindi 
+il metodo converge in sensibilmente piú tempo (testare per credere).
+
+L'idera é quella di trovare il giusto compromesso in modo tale da migliorare l' immagine il piú possibile
+in tempi ragionevoli.
+'''
