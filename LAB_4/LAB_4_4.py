@@ -1,7 +1,7 @@
 """
-Scrivere una funzione che implementi il metodo del gradiente con step size Î±k
+Scrivere una funzione che implementi il metodo del gradiente con step size a_k
 variabile, calcolato secondo la procedura di backtracking ad ogni iterazione kesima.
-Testare la function per minimizzare f(x) definita come: f(x) = 10(x âˆ’ 1)^2 + (y âˆ’ 2)^2
+Testare la function per minimizzare f(x) definita come: f(x) = 10(x - 1)^2 + (y -’ 2)^2
 In particolare:
 1. Plottare la superficie f(x) con plt.plot surface().
 2. Plottare le curve di livello (plt.contour()) e le iterate calcolate dal metodo.
@@ -18,7 +18,7 @@ def next_step(x,grad): # backtracking procedure for the choice of the steplength
     p = -grad
     j = 0
     jmax = 10    
-    while (f(x + alpha*p) > f(x) + c1*alpha*grad.T@ p) and (j < jmax) :  # Si procede finchÃ© la condizione di Armijo Ã© rispettata.
+    while (f(x + alpha*p) > f(x) + c1*alpha*grad.T@ p) and (j < jmax) :  # Si procede finché la condizione di Armijo Ã© rispettata.
         alpha = rho * alpha        # Alpha si dimezza
         j = j + 1
     if(j >= jmax):     # Se numero di iterazioni supera iterazioni_max
@@ -144,7 +144,16 @@ plt.ylabel('Norma Gradiente')
 plt.title('Iterazioni vs Norma Gradiente di f')
 
 
+'''
+Il valore dell'errore decresce poiché utilizziamo un metodo iterativo per arrivare alla soluzione, minimizzando
+la funzione.
 
+Stessa cosa accade per il valore della funzione obiettivo, che é proprio in fondo ció che vogliamo minimizzare
+quindi é corretto che decresca.
+
+La norma del gradiente di f segue di pari passo ció che é scritto subito sopra.
+
+'''
 
 
 

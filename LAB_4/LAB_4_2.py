@@ -1,18 +1,18 @@
 """
 Scrivere una funzione che implementi il metodo delle approssimazioni successive per il calcolo dello zero di una funzione f(x) per x ∈ R
-n prendendo come input una funzione per l’aggiornamento:
-• g(x) = x − f(x)e^{x/2}
-• g(x) = x − f(x)e^{−x/2}
-• g(x) = x − f(x)/f′(x)
+n prendendo come input una funzione per l'aggiornamento:
+- g1(x) = x - f(x)e^{x/2}
+- g2(x) = x - f(x)e^{-x/2}
+- g3(x) = x - f(x)/f'(x)
 
 Testare il risolutore per risolvere f(x) = e^x - x^2
-la cui soluzione é x∗ = −0.7034674. In particolare:
+la cui soluzione esatta � = 0.7034674. In particolare:
 
-    1. La funzione deve calcolare l’errore |xk − x∗| ad ogni iterazione.
-    2. Disegnare il grafico della funzione f nell’intervallo I = [1, 1] e verificare che x∗ sia lo zero di f in [−1, 1].
+    1. La funzione deve calcolare l' errore |x_k - x^* | ad ogni iterazione.
+    2. Disegnare il grafico della funzione f nell’intervallo I = [1, 1] e verificare che x_k sia lo zero di f in [−1, 1].
     3. Calcolare lo zero della funzione utilizzando tutte le funzioni precedentemente scritte.
-    4. Confrontare l’accuratezza delle soluzioni trovate e il numero di iterazioni effettuate.
-    5. Plottare l’errore al variare delle iterazioni per tutte le funzioni.
+    4. Confrontare l' accuratezza delle soluzioni trovate e il numero di iterazioni effettuate.
+    5. Plottare l' errore al variare delle iterazioni per tutte le funzioni.
 """
 
 import numpy as np
@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 ''' Metodo delle approssimazioni successive'''
 def succ_app(f, g, tolf, tolx, maxit, xTrue, x0=0):
   
-  err=np.zeros(maxit+1, dtype=np.float64)          # Il metodo delle approssimazioni successive é simile al Newton dell'es precedente.
+  err=np.zeros(maxit+1, dtype=np.float64)          # Il metodo delle approssimazioni successive � simile al Newton dell'es precedente.
   vecErrore=np.zeros(maxit+1, dtype=np.float64)
   
   i = 0
@@ -74,12 +74,15 @@ plt.show()
 
 (x1, i1, diffErr1, err1) = succ_app(f, g1, tolf, tolx, maxit, xTrue, x0)
 print('Metodo approssimazioni successive g1 \n x =',x1,'\n iter_new=', i1)
+print('\n')
 
 (x2, i2, diffErr2, err2) = succ_app(f, g2, tolf, tolx, maxit, xTrue, x0)
 print('Metodo approssimazioni successive g2 \n x =',x2,'\n iter_new=',i2)
+print('\n')
 
 (x3, i3, diffErr3, err3) = succ_app(f, g3, tolf, tolx, maxit, xTrue, x0)
 print('Metodo approssimazioni successive g3 \n x =',x3,'\n iter_new=',i3)
+print('\n')
 
 
 ''' Grafico Errore vs Iterazioni'''
@@ -90,16 +93,31 @@ plt.xlabel('Iterazioni')
 plt.ylabel('Errore')
 plt.title('Metodo delle approssimazioni successive con g1')
 plt.show()
+
+'''
+Il metodo delle approssimazioni successive non � detto che converga a causa di una possibile scelta inadeguata
+della stima iniziale o propriet� della funzione di punto fisso. 
+
+In generale per�, il metodo si comporta abbastanza similmente al metodo di Newton. In questo caso sono richieste
+un maggior numero di iterate a differenza del caso g3.
+'''
+
 # g2
-iterazioni_g2 = np.arange(0, i2)    # Il grafico risulta in quel modo proprio perché la funzione non gode di 
-                                    # proprietá di contrazione. Ovvero col procedere delle iterazioni, la
-                                    # distanza tra la stima attuale e la soluzione si riduca di un fattore 
-                                    # costante compreso tra 0 e 1.
+iterazioni_g2 = np.arange(0, i2)    
 plt.plot(iterazioni_g2, err2)
 plt.xlabel('Iterazioni')
 plt.ylabel('Errore')
 plt.title('Metodo delle approssimazioni successive con g2')
 plt.show()
+
+'''
+# Il grafico risulta in quel modo proprio perch� la funzione non gode della propriet� di contrazione. 
+Ovvero col procedere delle iterazioni, la distanza tra la stima attuale e la soluzione si riduca di un 
+fattore costante compreso tra 0 e 1.
+
+A tal proposito, dato che la funzione non gode di tale propriet�, il metodo non converge.
+'''
+
 # g3
 iterazioni_g3 = np.arange(0, i3)
 plt.plot(iterazioni_g3, err3)

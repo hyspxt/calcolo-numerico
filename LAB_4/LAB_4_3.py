@@ -255,3 +255,16 @@ print('Metodo approssimazioni successive \n x =',x_sa2,'\n iter_new=', i_sa2, '\
 print('\n')
 
 
+'''
+Qui non c'é molto da dire in realtá, le funzioni convergono tutte e hanno un comportamento iterazioni / errore 
+adeguato che rispecchiano ció che é stato detto nei precedenti esercizi, quindi nel caso riguardare quelli.
+
+Unica cosa degna di nota é che in tutti i casi il metodo di bisezione é quello che richiede un maggior numero di
+iterazioni, seguito da approx_succesive e infine Newton.
+
+Per quanto riguarda i tempi di esecuzione peró, Bisezione vince in quanto, nonostante richieda un maggior numero
+di iterazioni, le sue operazioni sono molto piú semplici. Approssimazioni successive al secondo posto e Newton
+terzo, a causa della complessitá delle loro operazioni, ma in generale sono molto simili.
+'''
+
+

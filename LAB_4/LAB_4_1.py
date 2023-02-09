@@ -118,7 +118,7 @@ print('\n')
 
 ''' Grafico Errore vs Iterazioni'''
 iterazioni_bisezione = np.arange(0, i_bi + 1)
-plt.plot(iterazioni_bisezione, err_bi)
+plt.plot(iterazioni_bisezione, err_bi) # Cambiare nel caso con semilogy
 plt.xlabel('Iterazioni')
 plt.ylabel('Errore')
 plt.title('Bisezione method')
@@ -132,3 +132,15 @@ plt.ylabel('Errore')
 plt.title('Newton method')
 plt.show()
 
+
+'''
+Per quanto riguarda il metodo di bisezione, esso richiede un numero decisamente maggiore di iterate rispetto al 
+metodo di Newton, che ha convergenza quadratica.
+Oltre a questo, l'errore relativo nel metodo di bisezione descresce ad un ritmo bene o male costante, 
+in generale dimezzandosi ad ogni iterazione, sebbene ci siano alcune punte che ne indicano l' aumento: ció é
+raro ma puó accadere in casi di problemi di precisione numerica o di approssimazione dei valori intermedi.
+    
+In Newton invece l' errore relativo diminuisce molto rapidamente nelle prima iterazioni, ma puó oscillare se la
+prima stima é molto lontana dalla soluzione. In generale peró, decresce molto piú velocemente rispetto al metodo
+di bisezione.
+'''

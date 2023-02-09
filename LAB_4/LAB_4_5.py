@@ -103,7 +103,8 @@ n = 2  # Dimensione fissata dello spazio vettoriale
 x_true = np.array([0,0])
 mode = 'plot_history'
 b = np.ones( (n, ) )    # b é un vettore di soli uni delle dimensione
-lambd = 0.2  # Lambda é uno scalare e al suo variare aumentano / diminuiscono i punti 
+
+lambd = 0.3  # Lambda é uno scalare e al suo variare aumentano / diminuiscono i punti 
 
 (x_last, norm_grad_list, function_eval_list, error_list, k, x) = minimize(x0, x_true,lambd, mode, step,MAXITERATIONS,ABSOLUTE_STOP)
 
@@ -130,3 +131,19 @@ plt.plot(x_iter, norm_grad_list, color='blue', marker='.', markersize=2)
 plt.xlabel('Iterazioni')
 plt.ylabel('Norma Gradiente')
 plt.title('Iterazioni vs Norma Gradiente di f')
+
+
+'''
+Al variare di lambda, variano anche il numero di iterazioni (e quindi i punti).
+Non é una cosa regolare e aumentare lambda non garantisce che aumentano le iterazioni.
+Personalmente, per una maggior precisione della funzione minimizzata (piú punti) il valore é = 0.3
+(nell' intervallo 0.1')
+
+Lambda é il fattore di penalizzazione applicato alla soluzione.
+
+'''
+
+
+
+
+
