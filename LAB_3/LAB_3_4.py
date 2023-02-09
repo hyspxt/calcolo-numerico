@@ -35,7 +35,8 @@ plt.show()
 """
 
 A_p = np.zeros(A.shape)
-p_max = 10
+p_max = 10 # Diciamo che p_max é il numero max di diadi (matrici di dimensione (n,1) ) di cui puó essere composta la sommatoria
+
 U, s, VT = scipy.linalg.svd(A)
 
 for i in range(p_max):
@@ -52,8 +53,13 @@ for i in range(p_max):
                                          # [12, 15, 18]}.              
                                         
 """
-    2) Visualizzare l'immagine A_p
+    2) Visualizzare l'immagine A_p.
 """
+
+'''
+L' immagine in quanto somma di diadi, risulta degradata rispetto all' immagine originale. Come vedremo dopo, 
+aumentando il numero di diadi aumenta la qualitá dell' immagine.
+'''
 
 print("A_p = \n", A_p)
 plt.imshow(A_p, cmap='gray')
@@ -72,20 +78,22 @@ m = U.size    # Servono per calcolare il fattore di compressione.
 n = VT.size
 c = min(m, n) / p_max - 1 
 
-print('\n')
+
 print('L\'errore relativo della ricostruzione di A è', err_rel)
 print('Il fattore di compressione è c=', c)
-
+print('\n')
 
 plt.figure(figsize=(20, 10))
 
 fig1 = plt.subplot(1, 2, 1)
-fig1.imshow(A, cmap='gray')
 plt.title('True image')
+fig1.imshow(A, cmap='gray')
+
 
 fig2 = plt.subplot(1, 2, 2)
-fig2.imshow(A_p, cmap='gray')
 plt.title('Reconstructed image with p =' + str(p_max))
+fig2.imshow(A_p, cmap='gray')
+
 
 plt.show()
 
@@ -113,19 +121,28 @@ for p_max in dim:      # P_max indica il numero di diadi che comporranno la matr
     n = VT.size
     relErr[j] = np.linalg.norm(A - A_p, ord = 2) / np.linalg.norm(A, ord = 2)
     c_p[j] = min(m, n) / p_max - 1 
-    print('L\'errore relativo della ricostruzione di A è', relErr[j])
-    print('Il fattore di compressione è c=', c_p[j])
+    print('Errore relativo della ricostruzione di A = ', relErr[j])
+    print('Fattore di compressione è c =', c_p[j])
+    print('\n')
     j = j + 1
     
 plt.plot(dim, relErr)
-plt.title('Relative Error on p dimension')
-plt.xlabel('p dimension')
-plt.ylabel('Relative Error')
+plt.title('Errore relativo sul numero di diadi p')
+plt.xlabel('dimensione di p')
+plt.ylabel('Errore relativo')
 plt.show()
 
 plt.plot(dim, c_p)  # É normale che il fattore di compressione diminuisca col procedere delle iterazioni:
                     # un valore molto alto significa che l' immagine compressa é molto differente da quella di partenza
-plt.title('Compression on p dimension')
-plt.xlabel('p dimension')
-plt.ylabel('Compression')
+plt.title('Fattore di compressione sul numero di diadi p')
+plt.xlabel('dimensione di p')
+plt.ylabel('Compressione')
 plt.show()
+
+'''
+In generale, aumentando il numero di diadi che compongono l'immagine ricostruita (la sommatoria) sia il fattore
+di compressione che l' errore relativo, come vediamo dai grafici tendono a diminuire, dato che si migliora 
+sempre di piú la qualita dell' immagine ricostruita. C' é peró un trade-off: infatti aumentando il numero
+di diadi si aumentano anche le dimensioni dei dati, che possono rendere la compressione meno efficiente, richiedendo
+un maggior numero di iterazioni. C' é anche qui da trovare un giusto compromesso.
+'''

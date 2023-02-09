@@ -2,9 +2,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.linalg
 
+"""
+1. Calcolare il polinomio di grado n = 5 che approssimi i seguenti dati:
+{(1.0, 1.18), (1.2, 1.26), (1.4, 1.23), (1.6, 1.37), (1.8, 1.37), (2.0, 1.45), (2.2, 1.42),
+(2.4, 1.46), (2.6, 1.53), (2.8, 1.59), (3.0, 1.50)}
+2. Risolvere il problema ai minimi quadrati sia con le equazioni normali che con la SVD (vedi A.1 e A.2).
+iii. Valutare graficamente i polinomi di approssimazione e confrontare gli errori commessi dai due metodi sul set di punti.
+"""
 
-n = 5 # Grado del polinomio approssimante
-    # Aumentando il grado del polinomio, aumenta anche la precisioe della funzione approssimante.
+n = 7 # Grado del polinomio approssimante
+
+'''
+Qui in realtá non c'é molto da dire é facilmente verificabile che un polinomio di grado maggiore si adatta meglio ai punti
+e quini la precisione della funzione approssimante é maggiore.
+'''
+
 
 x = np.array([1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3])
 y = np.array([1.18, 1.26, 1.23, 1.37, 1.37, 1.45, 1.42, 1.46, 1.53, 1.59, 1.5])
@@ -23,7 +35,7 @@ print("A = \n", A)
 
 ''' Risoluzione tramite equazioni normali'''
 
-# calcoliamo la matrice del sistema e il termine noto a parte
+# Si calcolano matrice del sistema e termine noto 
 ATA = A.T @ A
 ATy = A.T @ y
 
@@ -70,6 +82,11 @@ err1 = np.linalg.norm (y-y1, 2)
 err2 = np.linalg.norm (y-y2, 2) 
 print ('Errore di approssimazione con Eq. Normali: ', err1)
 print ('Errore di approssimazione con SVD: ', err2)
+
+"""
+Sebbene siano quasi identici, SVD presenta un errore leggermente minore in quanto é piú stabile come metodo
+e infatti genera soluzioni stabili anche con input poco precisi.
+"""
 
 '''CONFRONTO GRAFICO '''
 x_plot = np.linspace(1, 3, 100) 

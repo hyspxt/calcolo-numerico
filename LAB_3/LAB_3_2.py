@@ -3,17 +3,26 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.linalg
 
+"""
+Ripetere l’esercizio precedente su un dataset scaricabile al seguente indirizzo:
+https://www.kaggle.com/sakshamjn/heightvsweight-for-linear-polynomial-regression
+contenente i dati riguardanti il peso e l’altezza di 71 individui.
+Una volta scaricato, per caricarlo su Spyder utilizzare la libreria pandas, nello
+specifico la funzione pandas.read csv che fornisce come output il dataset.
+Questo dovrà essere poi convertito in un numpy array.
+"""
+
 data = pd.read_csv("HeightVsWeight.csv")
 data = np.array(data)
-print(data.shape)
 
 x = data[:, 0]
 y = data[:, 1]
 
-print(x.shape)
-print(y.shape)
-
-n = 5
+n = 7 # Grado del polinomio
+'''
+Qui in realtá non c'é molto da dire é facilmente verificabile che un polinomio di grado maggiore si adatta meglio ai punti
+e quini la precisione della funzione approssimante é maggiore.
+'''
 N = x.size
 
 A = np.zeros((N, n+1))
@@ -23,7 +32,6 @@ for i in range(n+1):
 
 ''' RISOLUZIONE CON EQUAZIONI NORMALI'''
 
-# calcoliamo la matrice del sistema e il termine noto a parte
 ATA = A.T @ A
 ATy = A.T @ y
 
@@ -58,7 +66,7 @@ def p(alpha, x):
 
 
 '''CONFRONTO GRAFICO '''
-x_plot = np.linspace(10, 80, 100)  # C'é aumentare lo spazio di approssimazione.
+x_plot = np.linspace(10, 80, 100)  # C'é da aumentare lo spazio di approssimazione.
 y_normali = p(alpha_normali, x_plot)
 y_svd = p(alpha_svd, x_plot)
 
@@ -66,8 +74,8 @@ plt.figure(figsize=(20, 10))
 
 # PLOT con Eq. Normali
 plt.subplot(1, 2, 1)
-plt.plot(x, y, 'or')
-plt.plot(x_plot, y_normali)
+plt.plot(x, y, 'or') # Plot dei punti 
+plt.plot(x_plot, y_normali) # Plot funzione approssimante
 plt.title('Approssimazione tramite Eq. Normali')
 
 # PLOT con Eq. Normali

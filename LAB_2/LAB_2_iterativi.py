@@ -158,7 +158,7 @@ rangeGS = range(0, kGS)
 """
 
 plt.figure()
-plt.plot(rangeJabobi, relErrJacobi, label='Jacobi', color='blue', linewidth=1, marker='o'  )
+plt.plot(rangeJabobi, relErrJacobi, label='Jacobi', color='blue', linewidth=1, marker='.'  )
 plt.plot(rangeGS, relErrGS, label='Gauss Seidel', color = 'red', linewidth=2, marker='.' )
 plt.legend(loc='upper right')
 plt.xlabel('iterations')
@@ -166,9 +166,16 @@ plt.ylabel('Relative Error')
 plt.title('Comparison of the different algorithms')
 plt.show()
 
+'''
+Con il procedere delle iterazioni, i metodi iterativi come Jacobi e Gauss-Seidel, l'errore relativo tendea a diminuire,
+proprio perché tali metodi sono progettati per avvicinarsi sempre di piú alla soluzione esatta ad ogni iterazione.
+Infatti sono generalmente usati per sistemi di grandi dimensioni, a scapito di una minore precisione complessiva
+e un numero maggiore di iterazioni.
+'''
+
 ####### Comportamento al variare di N ########  
 
-dim = np.arange(5, 100, 5)
+dim = np.arange(5, 100, 5) # Punti equidistanti
 
 ErrRelF_J = np.zeros(np.size(dim))
 ErrRelF_GS = np.zeros(np.size(dim))
@@ -197,7 +204,7 @@ for n in dim:
     
     ######### Metodi Diretti ############
     #### Cholesky ####
-    st = time.time()
+    st = time.time()       # Misuriamo il tempo di esecuzione per tutti i metodi al variare di n
     L = scipy.linalg.cholesky(A, lower = True)
     y = scipy.linalg.solve(L, b)
     my_x = scipy.linalg.solve(L.T, y)
@@ -248,6 +255,12 @@ plt.ylabel('Relative Error')
 plt.title('Algorithms Relative Error on N')
 plt.show()
 
+'''
+In generale, Jacobi al variare della dimensione del sistema presenta un errore relativo maggiore dovuto all'
+efficienza con cui utilizza le soluzioni correnti, a differenza di Gauss-Seidel che le utilizza in modo piú
+efficiente e rimane quindi costante a livello di errore.
+'''
+
 """
 6. Riportare in un grafico il numero di iterazioni di entrambi i metodi al variare di N.'
 """
@@ -261,6 +274,13 @@ plt.xlabel('N dimension')
 plt.ylabel('Number of iterations')
 plt.title('Algorithms iterations on N')
 plt.show()
+
+'''
+Medesimo discorso del commento precedente, Jacobi necessita di piú iterazioni rispetto a Gauss-Seidel 
+in quanto presenta velocitá di convergenza minore per arrivare alla soluzione. La pecca peró sta nel fatto che
+Gauss-Seidel richiede un maggior numero di operazioni per ogni iterazione e inoltre é piú soggetta al condizionamento
+(dato che non vediamo in questo esercizio). 
+'''
 
 """
 7. Riportare in un grafico il tempo impiegato dai metodi di Jacobi, Gauss-Seidel, LU, Cholesky al variare di N.
@@ -276,6 +296,12 @@ plt.xlabel('N value')
 plt.ylabel('Execution Time')
 plt.title('Different algorithms Execution time on N')
 plt.show()
+
+'''
+Nulla di nuovo, Gauss-Seidel converge un po' piú rapidamente verso la soluzione e questo é dimostrato dal 
+tempo di esecuzione. Inoltre, i metodi diretti risultano (cholesky - lupivot) chiaramente molto piú efficienti 
+rispetto ai metodi iterativi.
+'''
 
 """
 1. Utilizzando i grafici richiesti: spiegare l’andamento dell’errore rispetto al numero di condizione della

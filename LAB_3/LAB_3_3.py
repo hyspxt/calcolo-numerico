@@ -72,7 +72,7 @@ def polyPlot(f, start, end):
     y_plot = f(x_plot)       # Lo spazio di plotting della y dipende ovviamente dalla funzione che si considera.
     
     plt.figure()
-    plt.plot(x_plot, y_plot, 'red', label = 'function f', linestyle = '--')
+    plt.plot(x_plot, y_plot, 'red', label = 'function f', linestyle = '--', linewidth = 4) # Ridurre / aumentare per vedere meglio la funzione
     plt.title("Function")
     
     for n, color in [(1, 'blue'),(2, 'green'),(3, 'purple'),(5, 'pink'),(7, 'orange')]:
@@ -91,8 +91,8 @@ def polyPlot(f, start, end):
         2) Per ciascun valore di n {1, 2, 3, 5, 7} riportare il valore dell' errore commesso nel punto x = 0
         '''
         
-        err = f(0) - p(alpha, np.array([0])) # Vettore contente un solo valore, cioé l' unico punto x = 0.
-        print(f'Polinomio di grado {n} -> errore {err}', '\n')
+        err = abs(f(0) - p(alpha, np.array([0]))) # Vettore contente un solo valore, cioé l' unico punto x = 0.
+        print(f'Polinomio di grado {n} -> errore nel punto x = 0 : {err}', '\n')
         
         ''' 
         3) Calcolare la norma 2 dell' errore di approssimazione, commesso sugli m nodi, per ciascun valore di {1, 5, 7}.
@@ -101,7 +101,7 @@ def polyPlot(f, start, end):
             if i == n:   # Non c'é da valutare la norma per tutti i gradi del polinomio
                          # Quindi la si calcola solo se l' iterazione é uguale al grado 
                 norm = np.linalg.norm(y_plot - y_p)  # Norma = norm(sol.esatta - sol)
-                print (f'Polinomio di grado {n} -> norma {norm}', '\n')
+                print (f'Polinomio di grado {n} -> errore di approssimazione {norm}', '\n')
         plt.legend()
     plt.show()
     
@@ -109,14 +109,35 @@ f1 = lambda x: x * np.exp(x)
 f2 = lambda x: 1 / (1 + (25 * x))
 f3 = lambda x: np.sin(5 * x) + 3 * x
 
+'''
+Come possiamo notare dai grafici, l' utilizzo dei punti equidistanti garantisce una maggiore approssimazione
+del polinomio approssimante (a prescindere dal suo grado, sebbene grado maggiore = maggiore precisione in ogni 
+caso). Questo peró solo nel caso generale, addentriamoci nei casi singoli.
+'''
+
 print("Funzione 1: ")
 polyPlot(f1, -1, 1)
+'''
+Nella prima funzione, l' errore di approssimazione nel punto x = 0 con l' aumentare del grado del polinomio
+diminuisce, notiamo anche che nel caso n = 2, 3 l'errore si equivale in tal punto. 
+L' errore di approssimazione diminuisce invece di molto a causa dell' aumento della precisione della funzione 
+approssimante con l' andare avanti delle iterazioni.
+'''
 
 print("Funzione 2: ")
 polyPlot(f2, -1, 1)
+'''
+Nella seconda funzione, l' errore di approssimazione nel punto x = 0 diminuisce di pochissimo, quasi costante, 
+questo perché tutte i polinomi approssimanti si concentrano in quel punto. Notiamo inoltre rispetto a prima che
+tale valore é particolarmente alto rispetto a prima.
+L'errore di approssimazione diminuisce anch' esso molto lentamente per i medesimi motivi.
+'''
+
 print("Funzione 3: ")
 polyPlot(f3, 1, 5)
-
-# f = lambda x: ...
-# x = np.linspace(1, 5, N)
-# y = f(x)
+'''
+La terza funzione presenta dati particolari poiché si verifica overfitting, cioé la soluzione approssimata
+risulta troppo precisa nei punti equidistanti in input, ma non lo é necessariamente per i punti non utilizzati.
+Infatti x = 0 non é utilizzato e questo porta ad un aumento dell' errore in tal punto invece che una diminuzione.
+L' errore di approssimazione invece si comporta relativamente bene, sebbene ancora un po' alto.
+'''
