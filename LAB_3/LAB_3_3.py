@@ -19,9 +19,9 @@ Assegnati m punti equispaziati, con m fissato.
 3) Calcolare la norma 2 dell' errore di approssimazione, commesso sugli m nodi, per ciascun valore di {1, 5, 7}.
 """
 
-m =  50 # Il numero di punti é fissato. Si puó aumentare in modo da visualizzare meglio la funzione, in particolare la seconda.
+m = 50 # Il numero di punti é fissato. Si puó aumentare in modo da visualizzare meglio la funzione, in particolare la seconda.
         # Maggior numero di punti = piú precisione del polinomio approssimante.
-        # Con 50 punti si vedono correttamente le funzioni, ma la seconda risulta visivamente fuorviante.
+        # Con 50 punti equispaziati si vedono correttamente le funzioni, ma la seconda risulta visivamente fuorviante.
 
 
 # Funzione per valutare il polinomio p, in un punto x, dato il vettore dei coefficienti alpha
@@ -32,10 +32,11 @@ def p(alpha, x):
   y = np.dot(A, alpha)
   return y
 
-def approxPoly_neq(nDati, gradoP, x, y):
+def approxPoly_neq(nDati, gradoP, x, y):  # Vettori delle x e y dei punti
     """
     Il polinomio approssimante viene calcolato mediante il metodo delle equazioni normali.
     """
+    print('######### NEQ #######')
     A = np.zeros((nDati, gradoP + 1))
     for i in range(gradoP+1):
         A[:, i] = x**i
@@ -46,12 +47,13 @@ def approxPoly_neq(nDati, gradoP, x, y):
     L = scipy.linalg.cholesky(ATA, lower = True)
     alpha1 = scipy.linalg.solve(L, ATy, lower = True)
     alpha_normali = scipy.linalg.solve(L.T, alpha1)
-    return alpha_normali
+    return alpha_normali  # Restituisce il vettore dei coefficenti del polinomio approssimante
     
 def approxPoly_svd(nDati, gradoP, x, y):
     """
     Il polinomio approssimante viene calcolato mediante il metodo SVD.
     """
+    print('######### SVD #######')
     A = np.zeros((nDati, gradoP + 1))
     for i in range(gradoP+1):
         A[:, i] = x**i
@@ -73,12 +75,15 @@ def polyPlot(f, start, end):
     
     plt.figure()
     plt.plot(x_plot, y_plot, 'red', label = 'function f', linestyle = '--', linewidth = 4) # Ridurre / aumentare per vedere meglio la funzione
-    plt.title("Function")
+    plt.title("Function and approximations")
     
     for n, color in [(1, 'blue'),(2, 'green'),(3, 'purple'),(5, 'pink'),(7, 'orange')]:
         
-        alpha = approxPoly_neq(m, n, x_plot, y_plot)
-        y_p = p(alpha, x_plot)
+        alpha_normali = approxPoly_neq(m, n, x_plot, y_plot) # Sostituire con approxPoly_svd per vedere l'approssimazione mediante svd
+        y_p = p(alpha_normali, x_plot)                       # Oppure con approxPoly_neq per vedere con approssimazioni normali
+        
+        # alpha_svd = approxPoly_svd(m, n, x_plot, y_plot)
+        # y_p2 = p(alpha_svd, x_plot)
         
         ''' 
         1) Per ciascun valore di n {1, 2, 3, 5, 7} creare una figura con il grafico della funzione esatta f(x) 
@@ -88,10 +93,11 @@ def polyPlot(f, start, end):
                                                                                    # togliere il marker.     
         
         ''' 
-        2) Per ciascun valore di n {1, 2, 3, 5, 7} riportare il valore dell' errore commesso nel punto x = 0
+        2) Per ciascun valore di n {1, 2, 3, 5, 7} riportare il valore dell' errore di approssimazione commesso nel punto x = 0
         '''
         
-        err = abs(f(0) - p(alpha, np.array([0]))) # Vettore contente un solo valore, cioé l' unico punto x = 0.
+        err = abs(f(0) - p(alpha_normali, np.array([0]))) # Vettore contenente un solo valore, cioé l' unico punto x = 0.
+                                                          # Si calcola l' errore di approssimazione in tal punto.
         print(f'Polinomio di grado {n} -> errore nel punto x = 0 : {err}', '\n')
         
         ''' 
@@ -100,10 +106,11 @@ def polyPlot(f, start, end):
         for i in [1, 5, 7]:
             if i == n:   # Non c'é da valutare la norma per tutti i gradi del polinomio
                          # Quindi la si calcola solo se l' iterazione é uguale al grado 
-                norm = np.linalg.norm(y_plot - y_p)  # Norma = norm(sol.esatta - sol)
+                norm = np.linalg.norm(y_plot - y_p)  # Errore di approssimazione in norma 2 = norm(sol.esatta - sol.approx)
                 print (f'Polinomio di grado {n} -> errore di approssimazione {norm}', '\n')
         plt.legend()
     plt.show()
+    
     
 f1 = lambda x: x * np.exp(x)
 f2 = lambda x: 1 / (1 + (25 * x))
@@ -128,9 +135,10 @@ print("Funzione 2: ")
 polyPlot(f2, -1, 1)
 '''
 Nella seconda funzione, l' errore di approssimazione nel punto x = 0 diminuisce di pochissimo, quasi costante, 
-questo perché tutte i polinomi approssimanti si concentrano in quel punto. Notiamo inoltre rispetto a prima che
-tale valore é particolarmente alto rispetto a prima.
-L'errore di approssimazione diminuisce anch' esso molto lentamente per i medesimi motivi.
+questo perché tutti i polinomi approssimanti si concentrano in quel punto. Notiamo inoltre rispetto a prima che
+tale valore é particolarmente alto rispetto a prima. La funzione, data la sua struttura, subisce il fenomeno di Runge
+che causa oscillazioni negli estremi dell' intervallo.
+L'errore di approssimazione é piuttosto alto e diminuisce anch' esso molto lentamente per i medesimi motivi.
 '''
 
 print("Funzione 3: ")

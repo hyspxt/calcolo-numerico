@@ -17,7 +17,7 @@ def es1(n):
         a) crea un problema test di dimensione variabile n la cui soluzione esatta sia il vettore x di tutti
         elementi unitari e b il termine noto ottenuto moltiplicando la matrice A per la soluzione x.
         
-        b) calcola il numero di condizione (o una stima di esso).
+        b) calcola il numero di condizionamento (o una stima di esso).
     
         c) risolve il sistema lineare Ax = b con la fattorizzazione LU con pivoting.
     
@@ -27,21 +27,23 @@ def es1(n):
     
     A = np.matlib.rand((n, n))    # Si crea una matrice con valori random di dimensione nxn
     x = np.ones((n, 1))  # Matrice di uni di dimensione nx1 NON É UN VETTORE
-    b = np.dot(A, x)  # A @ x
+    b = np.dot(A, x)      
     
-    condA = np.linalg.cond(A, p=2)
+    condA = np.linalg.cond(A, p=2) # Condizionamento della matrice A
     print('Condiz. di A = ', condA)
     
-    # Ax = b <--> piv_L * x = b
-    lu, piv = LUdec.lu_factor(A)
-    my_x = scipy.linalg.lu_solve((lu, piv), b)
+    lu, piv = LUdec.lu_factor(A)    # Ax = b <--> piv_L * x = b
+    my_x = scipy.linalg.lu_solve((lu, piv), b)   
 
-    print('Norm = ', scipy.linalg.norm(x - my_x, 2))  # errore relativo
+    print('Norm = ', scipy.linalg.norm(x - my_x, 2))  # errore assoluto
     print ('\n')
     
-# Testing      
+# Testing    
+print('Caso n = 10: ')  
 es1(10)
+print('Caso n = 100: ')
 es1(100)
+print('Caso n = 1000: ')
 es1(1000)
 
 '''
@@ -52,13 +54,11 @@ abbastanza stabile e non si fa influenzare particolarmente da problemi di condiz
 A tal proposito, in quanto la dimensione del sistema é caratterizzata dalla forma n^p (con p norma) -> problema ben condizionato.
 
 Per quanto riguarda la soluzione, il sistema di partenza Ax = b puó essere risolto risolvendo i due sistemi 
-triangolari in ordine:     Ly = Pb     e     Ux = y
+triangolari in ordine:     Ly = Pb     e     Rx = y
 dove la matrice A nxn NON SINGOLARE é fattorizzabile con pivoting (PA = LU), con P matrice di permutazione,
 L matrice triangolare inferiore con tutti 1 sulla diagonale e U triangolare superiore non singolare. 
 
 '''
-
-
 
 
 def es2(n, A):
@@ -80,19 +80,20 @@ def es2(n, A):
         e quelli sopra e sottodiagonali uguali a -4    
     """
     
-    x = np.ones((n, 1))
-    b = np.dot(A, x)
+    x = np.ones((n, 1))  # Vettore soluzione composto solo da elementi unitari
+    b = np.dot(A, x)    
     
-    condA = np.linalg.cond(A, p=2)
+    condA = np.linalg.cond(A, p=2)   # Condizionamento della matrice A
     print('Condiz. di A = ', condA)
 
     # A = L * L^T
     L = scipy.linalg.cholesky(A, lower = True)
     
-    # Per Cholesky si risolveono in ordine i sistemi Ly = b e L.Tx = y
+    # Per Cholesky si risolvono in ordine i sistemi Ly = b e L.Tx = y
     y = scipy.linalg.solve(L, b)
     my_x = scipy.linalg.solve(L.T, y)
-    norm = scipy.linalg.norm(x - my_x, 2)
+    
+    norm = scipy.linalg.norm(x - my_x, 2) / scipy.linalg.norm(x, 2)  # Errore relativo
     print('Norma = ', norm)
     print('\n')
     
@@ -102,17 +103,17 @@ def es2(n, A):
 
 FIXED_STOP = 12
 
-# Testing Hilbert
+######## Testing Hilbert ########
 print('Caso Hilbert: -----------')
-KA_Hilb = np.zeros((FIXED_STOP-2, 1)) # Inizializzazione degli array di condizionamento e errore rel
-Err_Hilb = np.zeros((FIXED_STOP-2, 1))
+KA_Hilb = np.zeros((FIXED_STOP-2, 1)) # Inizializzazione degli array di condizionamento e errore relativo
+Err_Hilb = np.zeros((FIXED_STOP-2, 1)) # Hanno dimensione FIXED_STOP - 2 perchè il problema parte da dim 2
 
-for n in np.arange(2, FIXED_STOP): # Si verificano le condizioni dell'errore e del condizionamento al variare di n
+for n in np.arange(2, FIXED_STOP): # Si verificano le condizioni dell'errore relativo e del condizionamento al variare di n
                                     # Ovvero la dimensione della matrice.
     A_Hilb = scipy.linalg.hilbert(n)
     (KA_Hilb[n - 2], Err_Hilb[n - 2]) = es2(n, A_Hilb)
     
-# Testing Matrice Tridiagonale
+############à Testing Matrice Tridiagonale ###############
 print('Caso Tridiagonale: ----------')
 KA_TriD = np.zeros((FIXED_STOP-2, 1))
 Err_TriD = np.zeros((FIXED_STOP-2, 1))
@@ -125,19 +126,20 @@ for n in np.arange(2, FIXED_STOP):
 ###### PLOTTING ######
 
 # Disegna il grafico del numero di condizione in funzione della dimensione del sistema. Caso Hilbert.
-points = FIXED_STOP - 2
+points = FIXED_STOP - 2  # Numero di punti da plottare sul grafo
 dim_Matr_x = np.linspace(2, FIXED_STOP, points)
+
 plt.semilogy(dim_Matr_x, KA_Hilb)      # Cambiare nel caso con plot al posto di semilogy
 plt.title('HILBERT, Condizionamento')
-plt.xlabel('Dimensione matrice: n')
+plt.xlabel('Dimensione matrice')  # n
 plt.ylabel('K(A)')
 plt.show()
 
 # Disegna il grafico dell'errore in norma 2 in funzione della dimensione del sistema. Caso Hilbert.
-plt.semilogy(dim_Matr_x, Err_Hilb)
+plt.semilogy(dim_Matr_x, Err_Hilb)  # Nel caso sostituire con plot
 plt.title('HILBERT, Errore relativo')
-plt.xlabel('Dimensione matrice: n')
-plt.ylabel('Err = ||my_x-x|| / ||x||')
+plt.xlabel('Dimensione matrice')
+plt.ylabel('Errore relativo') # ||my_x-x||_2 / ||x||_2
 plt.show()
 
 '''
@@ -150,18 +152,17 @@ scala velocemente (peggiora) diversi ordini di grandezza.
 '''
 
 # Disegna il grafico del numero di condizione in funzione della dimensione del sistema. Caso Tridiagonale.
-points = FIXED_STOP
 plt.semilogy(dim_Matr_x, KA_TriD)
 plt.title('TRIDIAGONALE, Condizionamento')
-plt.xlabel('Dimensione matrice: n')
+plt.xlabel('Dimensione matrice')
 plt.ylabel('K(A)')
 plt.show()
 
 # Disegna il grafico dell'errore in norma 2 in funzione della dimensione del sistema. Caso Tridiagonale.
 plt.semilogy(dim_Matr_x, Err_TriD)
 plt.title('TRIDIAGONALE, Errore relativo')
-plt.xlabel('Dimensione matrice: n')
-plt.ylabel('Err = ||my_x-x|| / ||x||')
+plt.xlabel('Dimensione matrice')
+plt.ylabel('Errore relativo') # ||my_x-x||_2 / ||x||_2
 plt.show()     
 
 '''

@@ -48,7 +48,7 @@ def Jacobi(A,b,x0,maxit,tol, xTrue):
       #x[i]=(b[i]-sum([A[i,j]*x_old[j] for j in range(0,i)])-sum([A[i, j]*x_old[j] for j in range(i+1,n)]))/A[i,i]
       x[i] = (b[i]-np.dot(A[i,0:i],x_old[0:i])-np.dot(A[i,i+1:n],x_old[i+1:n])) / A[i,i]
     ite=ite+1
-    norma_it = np.linalg.norm(x_old-x) / np.linalg.norm(x_old)
+    norma_it = np.linalg.norm(x_old-x) / np.linalg.norm(x_old)    # Corrisponde al nuovo valore dell' errore da confrontare alla tolleranza
     relErr[ite] = np.linalg.norm(xTrue-x) / np.linalg.norm(xTrue)
     errIter[ite-1] = norma_it
     
@@ -106,7 +106,7 @@ print('\n b:\n',b)
 # Utilizzando itConverges, viene calcolato il raggio spettrale della matrice, ovvero il max degli autovalori
 # si ha che l' algoritmo converge se e solo se tale valore è <1
 
-D = 9 * np.eye(n)
+D = 9 * np.eye(n)     # Si prende la diagonale di uni moltiplicata per 9 = diagonale di 9
 E = np.diag(-4 * np.ones(n - 1), k = -1)
 F = np.diag(-4 * np.ones(n - 1), k = +1) 
 
@@ -138,18 +138,19 @@ tol = 10 ** - 8
 (xJacobi, kJacobi, relErrJacobi, errIterJacobi) = Jacobi(A, b, x0, maxit, tol, xTrue) 
 (xGS, kGS, relErrGS, errIterGS) = GaussSeidel(A, b, x0, maxit, tol, xTrue) 
 
-print('\nSoluzione calcolata da Jacobi:' )
-for i in range(n):
-    print('%0.2f' %xJacobi[i])
+# print('\nSoluzione calcolata da Jacobi:' )
+# for i in range(n):
+#     print(xJacobi[i])
 
-print('\nSoluzione calcolata da Gauss Seidel:' )
-for i in range(n):
-    print('%0.2f' %xGS[i])
+# print('\nSoluzione calcolata da Gauss Seidel:' )
+# for i in range(n):
+#     print(xGS[i])
+
 
 ### CONFRONTI ###
 # Confronto grafico degli errori di Errore Relativo
 
-rangeJabobi = range (0, kJacobi)
+rangeJabobi = range (0, kJacobi)   # Plotting Range
 rangeGS = range(0, kGS)
 
 """
@@ -167,7 +168,7 @@ plt.title('Comparison of the different algorithms')
 plt.show()
 
 '''
-Con il procedere delle iterazioni, i metodi iterativi come Jacobi e Gauss-Seidel, l'errore relativo tendea a diminuire,
+Con il procedere delle iterazioni, i metodi iterativi come Jacobi e Gauss-Seidel, l'errore relativo tende a a diminuire,
 proprio perché tali metodi sono progettati per avvicinarsi sempre di piú alla soluzione esatta ad ogni iterazione.
 Infatti sono generalmente usati per sistemi di grandi dimensioni, a scapito di una minore precisione complessiva
 e un numero maggiore di iterazioni.
@@ -219,8 +220,7 @@ for n in dim:
     et = time.time()
     elapsedTimeLU[i] = et - st
     
-    #metodi iterativi
-    
+    ######### Metodi Iterativi ############
     st = time.time()
     (xJ, kJ, relErrJ, errIterJ) = Jacobi(A, b, x0, maxit, tol, xTrue) 
     et = time.time()
@@ -231,21 +231,21 @@ for n in dim:
     et = time.time()
     elapsedTimeGS[i] = et - st
     
-    #errore relativo finale
-    ErrRelF_J[i] = relErrJ[-1]
+    ######### Errore relativo Finale ############
+    ErrRelF_J[i] = relErrJ[-1]       # Ultimo elemento del vettore
     ErrRelF_GS[i] = relErrGS[-1]
     
     #iterazioni
     ite_J[i] = kJ
     ite_GS[i]= kGS
 
-    i = i+1
+    i = i + 1
     
 """
 5. Riportare in un grafico l'errore relativo finale dei metodi al variare della dimensione N del sistema.'
 """
 
-# errore relativo finale dei metodi al variare della dimensione N
+# Errore Relativo Finale dei metodi al variare della dimensione N
 plt.figure()
 plt.semilogy(dim, ErrRelF_J, label='Jacobi', color='purple', linewidth=1, marker='o')
 plt.semilogy(dim, ErrRelF_GS, label='GaussSeidel', color='cyan', linewidth=1, marker='o')

@@ -18,14 +18,14 @@ data = np.array(data)
 x = data[:, 0]
 y = data[:, 1]
 
-n = 7 # Grado del polinomio
+n = 5 # Grado del polinomio
 '''
 Qui in realtá non c'é molto da dire é facilmente verificabile che un polinomio di grado maggiore si adatta meglio ai punti
-e quini la precisione della funzione approssimante é maggiore.
+e quindi la precisione della funzione approssimante é maggiore.
 '''
 N = x.size
 
-A = np.zeros((N, n+1))
+A = np.zeros((N, n+1))  # N numero di punti da intepolare, n grado del polinomio
 
 for i in range(n+1):
     A[:, i] = x**i

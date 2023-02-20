@@ -52,7 +52,7 @@ def minimize(x0, x_true, mode, step, MAXITERATION, ABSOLUTE_STOP):
         step = next_step(x_last, grad) # Si procede con l' algoritmo di backtracking, che restituisce
                                        # il nuovo valore alpha_k che rappresenta la lunghezza del passo.
         if(step==-1):
-            print('non converge')
+            print('Il metodo non converge ')
             return
     
         x_last = x_last - step * grad # Si fa la sottrazione perché l'algoritmo dei gradienti prevede che 
@@ -101,14 +101,17 @@ x0 = np.array((3,-5))
 
 v_x0 = np.linspace(-5,5,500)
 v_x1 = np.linspace(-5,5,500)
-xv = [x0v,x1v] = np.meshgrid(v_x0, v_x1) 
+xv = [x0v,x1v] = np.meshgrid(v_x0, v_x1) # La funzione meshgrid trasforma il dominio specificato 
+                                          # da un singolo vettore o da due vettori x e y in X e Y in matrici da utilizzare per la valutazione 
+                                          # delle funzioni di due variabili.
+                                          #  Le righe di X sono copie del vettore x e le colonne di Y sono copie del vettore y .
 z = f(xv)
    
 '''superficie'''
 plt.figure()
 
 ax = plt.axes(projection='3d')
-ax.plot_surface(x0v, x1v, z, cmap='ocean')
+ax.plot_surface(x0v, x1v, z, cmap='viridis')
 ax.set_title('Surface plot')
 plt.show()
 
@@ -117,14 +120,14 @@ if mode=='plot_history':
    contours = plt.contour(x0v, x1v, z, levels = 40) # Si plottano le curve di livello di livello.
    plt.plot(x[0], x[1], 'o', markersize = 3) # Plottiamo le x soluzioni
    plt.plot(x_true[0], x_true[1], 'x' ) # Soluzioni ottime
-   plt.title('Curve di livello + iterate')
+   plt.title('Insiemi di livello + iterate')
 
 '''plots'''
 x_iter = np.arange(1, k+1).reshape(norm_grad_list.shape) # Si fa il reshape delle iterazioni per poterle plottare
 
 #Errore vs Iterazioni
 plt.figure()
-plt.plot(x_iter, error_list, color='red', marker='.', markersize=2)
+plt.plot(x_iter, error_list, color='red', marker='.' , markersize=2)
 plt.xlabel('Iterazioni');
 plt.ylabel('Errore');
 plt.title('Iterazioni vs Errore di f')
@@ -138,7 +141,7 @@ plt.title('Iterazioni vs Funzione Obiettivo')
 
 # Iterazioni vs Norma Gradiente
 plt.figure()
-plt.plot(x_iter, norm_grad_list, color='blue', marker='.', markersize=2)
+plt.plot(x_iter, norm_grad_list, marker='.',color='blue', markersize=2)
 plt.xlabel('Iterazioni')
 plt.ylabel('Norma Gradiente')
 plt.title('Iterazioni vs Norma Gradiente di f')

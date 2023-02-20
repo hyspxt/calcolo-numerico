@@ -27,6 +27,7 @@ A = data.coins()       # Se si vuole provare con altre immagini, provare con dat
 print(type(A))
 print(A.shape)
 
+plt.title('Immagine originale')
 plt.imshow(A, cmap='gray')
 plt.show()
 
@@ -63,6 +64,7 @@ aumentando il numero di diadi aumenta la qualitá dell' immagine.
 
 print("A_p = \n", A_p)
 plt.imshow(A_p, cmap='gray')
+plt.title('Immagine costruita come somma di diadi')
 plt.show()
 
 """
@@ -74,13 +76,13 @@ err_rel = np.linalg.norm(A - A_p, ord = 2) / np.linalg.norm(A, ord = 2)
     4) Calcolare il fattore di compressione c_p = 1/ p * min (m, n) - 1
 """
 
-m = U.size    # Servono per calcolare il fattore di compressione.
+m = U.size    # Servono per calcolare il fattore di compressione.c
 n = VT.size
 c = min(m, n) / p_max - 1 
 
 
 print('L\'errore relativo della ricostruzione di A è', err_rel)
-print('Il fattore di compressione è c=', c)
+print('Il fattore di compressione è c =', c)
 print('\n')
 
 plt.figure(figsize=(20, 10))
@@ -97,14 +99,16 @@ fig2.imshow(A_p, cmap='gray')
 
 plt.show()
 
-dim = np.arange(2, 20, 2)
-relErr = np.zeros(np.size(dim))
-c_p = np.zeros(np.size(dim))
-
 # al variare di p
 """
     5) Calcolare e plottare l' errore relativo e il fattore di compressione al variare di p.
 """
+
+dim = np.arange(2, 20, 2)
+relErr = np.zeros(np.size(dim))
+c_p = np.zeros(np.size(dim))
+
+
 j = 0
 for p_max in dim:      # P_max indica il numero di diadi che comporranno la matrice.
                         # una diade é una matrice [n, 1] e NON é un vettore.
@@ -119,8 +123,11 @@ for p_max in dim:      # P_max indica il numero di diadi che comporranno la matr
       
     m = U.size    # Servono per calcolare il fattore di compressione.
     n = VT.size
-    relErr[j] = np.linalg.norm(A - A_p, ord = 2) / np.linalg.norm(A, ord = 2)
     c_p[j] = min(m, n) / p_max - 1 
+    
+    relErr[j] = np.linalg.norm(A - A_p, ord = 2) / np.linalg.norm(A, ord = 2)
+    
+    
     print('Errore relativo della ricostruzione di A = ', relErr[j])
     print('Fattore di compressione è c =', c_p[j])
     print('\n')

@@ -31,7 +31,7 @@ def succ_app(f, g, tolf, tolx, maxit, xTrue, x0=0):
   x = x0
 
   while (abs(f(x)) > tolf and i < maxit): 
-    x_appr = g(x)          # x_{k+1} - g(x_k)
+    x_appr = g(x)          # x_{k+1} = g(x_k)
     err[i] = abs(x_appr - x)
     vecErrore[i] = abs(x - xTrue)
     i = i + 1

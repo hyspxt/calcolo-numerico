@@ -95,7 +95,7 @@ def grad_f(x, lambd):
     return 2 * (x - b) + 2 * lambd * x # Gradiente di f(x)
 
 step=0.1
-MAXITERATIONS=1000
+MAXITERATIONS=100
 ABSOLUTE_STOP=1.e-5
 
 x0 = np.array((3,2))

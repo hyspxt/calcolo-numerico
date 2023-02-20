@@ -115,11 +115,15 @@ g1 = lambda x: (2 - x ** 3) / (4 * np.cos(x))
 a_f1 = 0
 b_f1 = 2
 
+fTrue = f1(xTrue)
+
 x_plot = np.linspace(a_f1, b_f1, 100)
 y_plot = f1(x_plot)
 plt.plot(x_plot, y_plot)
+plt.plot(xTrue, fTrue, 'r*')
 plt.xlabel('x')
 plt.ylabel('f(x)')
+plt.grid()
 plt.title('Funzione f1 in [0, 2]')
 plt.show()
     
@@ -171,7 +175,7 @@ plt.title('Approssimazioni successive method on f1')
 plt.show()
 
 # Confronto prestazioni, numero di iterazioni e risultati
-print('Metodo di Bisezione \n x = ', x_bi, '\n iter_bisezion = ', i_bi, '\n iter_max = ', k_bi, '\n Tempo di esecuzione = ', elapsedTime_f1[0], 'seconds')
+print('Metodo di Bisezione \n x = ', x_bi, '\n iter_bisezion = ', i_bi + 1, '\n iter_max = ', k_bi, '\n Tempo di esecuzione = ', elapsedTime_f1[0], 'seconds')
 print('\n')
 print('Metodo di Newton \n x =',x_ne,'\n iter_new = ', i_ne, '\n err_new = ', err_ne , '\n Tempo di esecuzione = ', elapsedTime_f1[1], 'seconds')
 print('\n')
@@ -191,11 +195,15 @@ g2 = lambda x: x ** (1 / 3) + 2
 a_f2 = 3
 b_f2 = 5
 
+fTrue2 = f2(xTrue2)
+
 x_plot2 = np.linspace(a_f2, b_f2, 100)
 y_plot2 = f2(x_plot2)
 plt.plot(x_plot2, y_plot2, 'g')
+plt.plot(xTrue2, fTrue2, 'r*')
 plt.xlabel('x')
 plt.ylabel('f(x)')
+plt.grid()
 plt.title('Funzione f2 in [3, 5]')
 plt.show()
     

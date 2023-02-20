@@ -102,12 +102,13 @@ plt.plot(x_plot, f_plot)
 plt.plot(xTrue, fTrue, 'r*')
 plt.xlabel('x')
 plt.ylabel('f(x)')
+plt.grid()
 plt.title('function')
 plt.show()
 
 ''' Calcolo soluzione tramite Bisezione e Newton'''
 (x_bi, i_bi, k_bi, err_bi) = bisezione(a, b, f, tolx, xTrue)
-print('Metodo di bisezione \n x =',x_bi,'\n iter_bise=', i_bi, '\n iter_max=', k_bi)
+print('Metodo di bisezione \n x =',x_bi,'\n iter_bise=', i_bi + 1, '\n iter_max=', k_bi)
 print('\n')
 
 

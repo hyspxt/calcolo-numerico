@@ -10,11 +10,11 @@ import scipy.linalg
 iii. Valutare graficamente i polinomi di approssimazione e confrontare gli errori commessi dai due metodi sul set di punti.
 """
 
-n = 7 # Grado del polinomio approssimante
+n = 5 # Grado del polinomio approssimante in {1, 2, 3, 5, 7}
 
 '''
 Qui in realtá non c'é molto da dire é facilmente verificabile che un polinomio di grado maggiore si adatta meglio ai punti
-e quini la precisione della funzione approssimante é maggiore.
+e quindi la precisione della funzione approssimante é maggiore.
 '''
 
 
@@ -29,9 +29,9 @@ N = x.size # Numero dei dati (punti da approssimare mediante il polinomio)
 A = np.zeros((N, n+1)) # La matrice ha come righe il numero di punti = 11 e colonne il grado del polinomio
 
 for i in range(n+1):
-    A[:,i] = x**i  # Vuol dire che la colonna i ha i valori dei punti elevati alla i
+    A[:,i] = x**i  # Vuol dire che la colonna i della matrice A ha i valori dei punti elevati alla i
 
-print("A = \n", A)
+# print("A = \n", A)
 
 ''' Risoluzione tramite equazioni normali'''
 
@@ -84,13 +84,12 @@ print ('Errore di approssimazione con Eq. Normali: ', err1)
 print ('Errore di approssimazione con SVD: ', err2)
 
 """
-Sebbene siano quasi identici, SVD presenta un errore leggermente minore in quanto é piú stabile come metodo
+Sebbene siano quasi identici, SVD presenta un errore di approssimazione leggermente minore in quanto é piú stabile come metodo
 e infatti genera soluzioni stabili anche con input poco precisi.
 """
 
 '''CONFRONTO GRAFICO '''
 x_plot = np.linspace(1, 3, 100) 
-
 y_normali = p(alpha_normali, x_plot)
 y_svd = p(alpha_svd, x_plot)
 
