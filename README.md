@@ -8,12 +8,11 @@ These tasks are divided according to the topic in question seen during the cours
  - LAB_5 contaisn image blurring and deblurring exercises other than Lambda penalty, Gaussian Kernel, Gaussian Blur and image noise.
 
 ## Dependencies
-
-
+Mostly used `numpy`, `matplotlib`, `math` and `time`. If you don't have these libraries installed, I recommend you to do it.
+The workspace for me has been the IDE Spyder, from the Anaconda suite, which includes all the libraries mentioned above natively without need to download them.
 
 ## Building, Running and Testing
 
-## Implementations
 
 ## Credits
 Made by Patrick Alfieri. 
