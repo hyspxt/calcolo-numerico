@@ -1,7 +1,8 @@
 # calcolo-numerico
-02023 - Collection of homeworks for "Calcolo Numerico".  
+ - Collection of homeworks for "Calcolo Numerico".  
 
 # Description
+This is a collection of homeworks for "Calcolo Numerico" - 02023 course, Bachelor Degree in Computer Science, UniBo. This  
 
 ## Dependencies
 
