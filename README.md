@@ -12,7 +12,14 @@ Mostly used `numpy`, `matplotlib`, `math` and `time`. If you don't have these li
 The workspace for me has been the IDE Spyder, from the Anaconda suite, which includes all the libraries mentioned above natively without need to download them.
 
 ## Building, Running and Testing
-
+If you don't like the IDE, you can test the programs with:
+```sh
+$ python3 file_name.py
+```
+And you can make sure that python is installed and check version with:
+```sh
+$ python3 -V
+```
 
 ## Credits
 Made by Patrick Alfieri. 
